@@ -3,7 +3,7 @@
   var ps = [];
   var tokens = [];
   function parse(text) {
-    tokens = text.split(" ");
+    tokens = JSON.parse(text);
   }
   function go() {
     var thisToken;
@@ -31,10 +31,13 @@
         b = ds.pop();
         ds.push(a+b);
         break;
+      case ".s":
+        return ds;
+        break;
     }
   }
   // testing
-  parse('3 -6 +');
+  parse('[3, -6, "+", ".s"]');
   go();
   // expect ds is now [-3]
 
