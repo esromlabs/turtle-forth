@@ -7,7 +7,7 @@
   }
   function go() {
     var thisToken;
-    while (tokens[0].length) {
+    while (tokens.length) {
       // consume this token
       thisToken = tokens.shift();
       if (isData(thisToken)) {
@@ -21,11 +21,11 @@
   function isData(str) {
     // simple integer
     var dataPattern = new RegExp("-?[0-9]+");
-    return dataPattern.test(str);
+    return dataPattern.test(''+str);
   }
   function execute(instruction) {
     var a, b;
-    switch(istruction) {
+    switch(instruction) {
       case "+":
         a = ds.pop();
         b = ds.pop();
@@ -37,8 +37,11 @@
     }
   }
   // testing
+
+  var ds_ele = document.getElementById('ds');
   parse('[3, -6, "+", ".s"]');
   go();
+  ds_ele.innerHTML = JSON.stringify(ds);
   // expect ds is now [-3]
 
 })();
