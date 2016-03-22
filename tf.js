@@ -1,6 +1,8 @@
 (function(yurt) {
   var ds = [];
   var ps = [];
+  var heap = {};
+  var funcDef = false, funcName = '';
   var tokens = [];
   function parse(text) {
     var first_char = text[0];
@@ -14,12 +16,31 @@
         tokens = text.split(" ");
     }
   }
+  function arrayCopy(a) {
+    var i;
+    var b = [];
+    for (i = 0; i < a.length; i+=1) {
+      b[i] = a[i];
+    }
+    return b;
+  }
   function go() {
     var thisToken;
     while (tokens.length) {
       // consume this token
       thisToken = tokens.shift();
-      if (isData(thisToken)) {
+      if (funcDef) {
+        if (!funcName) { funcName = thisToken; }
+        else if (thisToken !== ';') {ps.push(thisToken);}
+        else {
+          funcDef = false;
+          heap[funcName] = arrayCopy(ps);
+          ps = [];
+          funcName = '';
+          funcDef = false;
+        }
+      }
+      else if (isData(thisToken)) {
         ds.push(+thisToken);
       }
       else {
@@ -29,12 +50,15 @@
   }
   function isData(str) {
     // simple integer
-    var dataPattern = new RegExp("-?[0-9]+");
+    var dataPattern = new RegExp("^-?[0-9]+$");
     return dataPattern.test(''+str);
   }
   function execute(instruction) {
     var a, b;
     switch(instruction) {
+      case ":":
+        funcDef = true;
+      break;
       case "+":
         a = ds.pop();
         b = ds.pop();
@@ -81,8 +105,14 @@
         ds_ele.innerHTML += JSON.stringify(ds);
         break;
       default:
-        a = ds.pop();
-        ds.push(eval(instruction + '('+ a +');'));
+        if (heap[instruction]) {
+          tokens = heap[instruction].concat(tokens);
+        }
+        else {
+          a = ds.pop();
+          ds.push(eval(instruction + '('+ a +');'));
+        }
+
     }
   }
   // testing
@@ -94,6 +124,7 @@
   //parse('4 dup * Math.sqrt .s');
   //parse('4 3 swap .s');
   //parse('4 3 dup * swap dup * + Math.sqrt .s');
-  parse('20 fd 72 tn 20 fd 108 tn 20 fd 72 tn 20 fd 108 tn .s');
+  //parse('20 fd 72 tn 20 fd 108 tn 20 fd 72 tn 20 fd 108 tn .s');
+  parse(': times2 2 * ; 4 times2 .s');
   go();
 })(yurt);
