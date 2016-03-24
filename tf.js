@@ -26,6 +26,8 @@
   }
   function go() {
     var thisToken;
+    funcDef = false;
+    funcName = '';
     while (tokens.length) {
       // consume this token
       thisToken = tokens.shift();
@@ -100,10 +102,14 @@
         b = ds.pop();
         ds.push(a);
         ds.push(b);
-        break;
+      break;
       case ".s":
         ds_ele.innerHTML += JSON.stringify(ds);
-        break;
+      break;
+      case ".":
+        ds_ele.innerHTML += JSON.stringify(ds);
+        ds = [];
+      break;
       default:
         if (heap[instruction]) {
           tokens = heap[instruction].concat(tokens);
@@ -139,6 +145,13 @@
   //parse(': times2 2 * ; 4 times2 .s');
   //go();
 })(yurt);
+
+function enterKey(event) {
+  if (event.keyCode == 13) {
+    go();
+  }
+}
 function go() {
-  tf.run(document.getElementById('tf-code-input').value);
+  var code = document.getElementById('tf-code-input').value;
+  tf.run(code);
 }
