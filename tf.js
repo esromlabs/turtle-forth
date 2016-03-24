@@ -115,6 +115,17 @@
 
     }
   }
+  // expose the interface
+  tf = {
+    'run': function(tf_code, options) {
+      //clean
+      ds_ele.innerHTML = '';
+      // parse
+      parse(tf_code);
+      go();
+    }
+  };
+
   // testing
 
   var ds_ele = document.getElementById('ds');
@@ -125,6 +136,9 @@
   //parse('4 3 swap .s');
   //parse('4 3 dup * swap dup * + Math.sqrt .s');
   //parse('20 fd 72 tn 20 fd 108 tn 20 fd 72 tn 20 fd 108 tn .s');
-  parse(': times2 2 * ; 4 times2 .s');
-  go();
+  //parse(': times2 2 * ; 4 times2 .s');
+  //go();
 })(yurt);
+function go() {
+  tf.run(document.getElementById('tf-code-input').value);
+}
