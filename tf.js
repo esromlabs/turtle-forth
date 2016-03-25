@@ -31,7 +31,7 @@
           heap_ele.innerHTML = JSON.stringify(heap, null, '');
           ps = [];
           funcName = '';
-          funcDef = false;
+          input_ele.value = '';
         }
       }
       else if (isJsonData(thisToken)) {
@@ -65,22 +65,22 @@
         a = ds.pop();
         b = ds.pop();
         ds.push(a+b);
-        break;
+      break;
       case "-":
         a = ds.pop();
         b = ds.pop();
         ds.push(a-b);
-        break;
+      break;
       case "*":
         a = ds.pop();
         b = ds.pop();
         ds.push(a*b);
-        break;
+      break;
       case "/":
         a = ds.pop();
         b = ds.pop();
         ds.push(a/b);
-        break;
+      break;
       case "%":
         a = ds.pop();
         b = ds.pop();
@@ -103,7 +103,7 @@
       break;
       case "dup":
         ds.push(ds[ds.length-1]);
-        break;
+      break;
       case "swap":
         a = ds.pop();
         b = ds.pop();
@@ -120,7 +120,7 @@
       default:
         if (instruction[0] === '@') {
           a = ds.pop();
-          heap[instruction.substr(1)] = a;
+          heap[instruction.substr(1)] = [a];
           heap_ele.innerHTML = JSON.stringify(heap, null, '');
         }
         else if (heap[instruction]) {
@@ -130,8 +130,11 @@
           a = ds.pop();
           ds.push(eval(instruction + '('+ a +');'));
         }
-
+      break;
     }
+  }
+  function displayHeap() {
+
   }
   // expose the interface
   tf = {
@@ -148,7 +151,7 @@
 
   var ds_ele = document.getElementById('ds');
   var heap_ele = document.getElementById('heap');
-
+  input_ele = document.getElementById('tf-code-input');
   //parse('[3, -6, "+", ".s"]');
   //parse('3 -6 + .s');
   //parse('16 Math.sqrt .s');
@@ -166,6 +169,6 @@ function enterKey(event) {
   }
 }
 function go() {
-  var code = document.getElementById('tf-code-input').value;
+  var code = input_ele.value;
   tf.run(code);
 }
