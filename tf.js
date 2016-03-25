@@ -5,16 +5,7 @@
   var funcDef = false, funcName = '';
   var tokens = [];
   function parse(text) {
-    var first_char = text[0];
-    switch (first_char) {
-      case '[':
-      case '{':
-      case '"':
-        tokens = JSON.parse(text);
-        break;
-      default:
-        tokens = text.split(" ");
-    }
+    tokens = text.split(" ");
   }
   function arrayCopy(a) {
     var i;
@@ -37,12 +28,16 @@
         else {
           funcDef = false;
           heap[funcName] = arrayCopy(ps);
+          heap_ele.innerHTML = JSON.stringify(heap, null, '');
           ps = [];
           funcName = '';
           funcDef = false;
         }
       }
-      else if (isData(thisToken)) {
+      else if (isJsonData(thisToken)) {
+        ds.push(JSON.parse(thisToken));
+      }
+      else if (isNumeric(thisToken)) {
         ds.push(+thisToken);
       }
       else {
@@ -50,9 +45,14 @@
       }
     }
   }
-  function isData(str) {
+  function isJsonData(str) {
     // simple integer
-    var dataPattern = new RegExp("^-?[0-9]+$");
+    var dataPattern = new RegExp('^(\\{.*\\}|\\[.*\\]|\\".*\\")$');
+    return dataPattern.test(''+str);
+  }
+  function isNumeric(str) {
+    // simple integer
+    var dataPattern = new RegExp('^-?[0-9]+$');
     return dataPattern.test(''+str);
   }
   function execute(instruction) {
@@ -85,15 +85,22 @@
         a = ds.pop();
         b = ds.pop();
         ds.push(a%b);
-        break;
+      break;
+      case "pen":
+        a = ds.pop();
+        if (a) {yurt.pd();} else {yurt.pu();}
+      break;
+      case "cs":
+        yurt.cs();
+      break;
       case "fd":
         a = ds.pop();
         yurt.fd(a);
-        break;
+      break;
       case "tn":
         a = ds.pop();
         yurt.rt(a);
-        break;
+      break;
       case "dup":
         ds.push(ds[ds.length-1]);
         break;
@@ -111,7 +118,12 @@
         ds = [];
       break;
       default:
-        if (heap[instruction]) {
+        if (instruction[0] === '@') {
+          a = ds.pop();
+          heap[instruction.substr(1)] = a;
+          heap_ele.innerHTML = JSON.stringify(heap, null, '');
+        }
+        else if (heap[instruction]) {
           tokens = heap[instruction].concat(tokens);
         }
         else {
@@ -135,6 +147,8 @@
   // testing
 
   var ds_ele = document.getElementById('ds');
+  var heap_ele = document.getElementById('heap');
+
   //parse('[3, -6, "+", ".s"]');
   //parse('3 -6 + .s');
   //parse('16 Math.sqrt .s');
