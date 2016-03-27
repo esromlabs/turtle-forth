@@ -22,7 +22,13 @@
     "compileOnSave": true,
     "buildOnSave": false,
     "files": [
-        "turtle.ts"
+        "turtle.ts",
+        "typings/browser.d.ts",
+        "typings/browser/ambient/es6-shim/index.d.ts",
+        "typings/browser/ambient/jasmine/index.d.ts",
+        "typings/main.d.ts",
+        "typings/main/ambient/es6-shim/index.d.ts",
+        "typings/main/ambient/jasmine/index.d.ts"
     ],
     "atom": {
         "rewriteTsconfig": true
