@@ -11,7 +11,7 @@ var T3D;
             this.rad += degrees * 0.0174532925;
         };
         return Heading;
-    })();
+    }());
     var Vector3 = (function () {
         function Vector3(v) {
             if (v === void 0) { v = null; }
@@ -26,7 +26,7 @@ var T3D;
             }
         }
         return Vector3;
-    })();
+    }());
     var Turtle = (function () {
         function Turtle(ctx, domEle) {
             this.ctx = ctx;
@@ -110,9 +110,10 @@ var T3D;
             return this;
         };
         return Turtle;
-    })();
+    }());
     T3D.Turtle = Turtle;
 })(T3D || (T3D = {}));
 var domCanvaseElement = document.getElementById('tf-drawing');
 var canvasContext = domCanvaseElement.getContext("2d");
 var yurt = new T3D.Turtle(canvasContext, domCanvaseElement);
+//# sourceMappingURL=turtle.js.map
