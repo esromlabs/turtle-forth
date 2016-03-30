@@ -26,19 +26,12 @@ System.register(['angular2/core'], function(exports_1, context_1) {
                     this.funcDef = false;
                     this.funcName = '';
                     this.tokens = [];
-                    this.tf = {
-                        'run': function (tf_code, options) {
-                            this.ds_ele.innerHTML = '';
-                            this.parse(tf_code);
-                            this.go();
-                        }
-                    };
                     this.ds_ele = document.getElementById('ds');
                     this.heap_ele = document.getElementById('heap');
                     this.input_ele = document.getElementById('tf-code-input');
                 }
                 Forth.prototype.parse = function (text) {
-                    this.tokens = text.split(" ");
+                    this.tokens = text.split(' ');
                 };
                 Forth.prototype.arrayCopy = function (a) {
                     var i;
@@ -67,7 +60,6 @@ System.register(['angular2/core'], function(exports_1, context_1) {
                                 this.heap_ele.innerHTML = JSON.stringify(this.heap, null, '');
                                 this.ps = [];
                                 this.funcName = '';
-                                this.input_ele.value = '';
                             }
                         }
                         else if (this.isJsonData(thisToken)) {
@@ -180,10 +172,14 @@ System.register(['angular2/core'], function(exports_1, context_1) {
                 function AppComponent() {
                     this.forth = new Forth();
                 }
+                AppComponent.prototype.enterKey = function (event) {
+                    this.forth.parse(this.code);
+                    this.forth.go();
+                };
                 AppComponent = __decorate([
                     core_1.Component({
                         selector: 'my-app',
-                        template: "<h1>turtle-FORTH</h1><pre>{{forth.ds}}</pre>"
+                        template: "\n    <h1>turtle-FORTH</h1><pre>{{forth.ds}}</pre>\n    <form (ngSubmit)=\"enterKey()\">\n      <input [(ngModel)]=\"code\" placeholder=\"Forth code goes here... or check out help\" type=\"text\" style=\"width:698px;\"/>\n      <input class=\"btn-primary\" type=\"submit\" value=\"go\">\n    </form>\n    "
                     }), 
                     __metadata('design:paramtypes', [])
                 ], AppComponent);

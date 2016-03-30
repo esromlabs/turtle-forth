@@ -8,7 +8,7 @@ class Forth {
   funcName = '';
   tokens = [];
   parse(text) {
-    this.tokens = text.split(" ");
+    this.tokens = text.split(' ');
   }
   arrayCopy(a) {
     var i;
@@ -34,7 +34,7 @@ class Forth {
           this.heap_ele.innerHTML = JSON.stringify(this.heap, null, '');
           this.ps = [];
           this.funcName = '';
-          this.input_ele.value = '';
+          //this.input_ele.value = '';
         }
       }
       else if (this.isJsonData(thisToken)) {
@@ -139,17 +139,6 @@ class Forth {
   displayHeap() {
 
   }
-  // expose the interface
-  tf = {
-    'run': function(tf_code, options) {
-      //clean
-      this.ds_ele.innerHTML = '';
-      // parse
-      this.parse(tf_code);
-      this.go();
-    }
-  };
-
   // testing
 
   ds_ele = document.getElementById('ds');
@@ -163,6 +152,7 @@ class Forth {
   //parse('4 3 dup * swap dup * + Math.sqrt .s');
   //parse('20 fd 72 tn 20 fd 108 tn 20 fd 72 tn 20 fd 108 tn .s');
   //parse(': times2 2 * ; 4 times2 .s');
+  // a 3 + @a a fd 0.61803 360 * tn
   //go();
 
 
@@ -171,9 +161,21 @@ class Forth {
 
 @Component({
     selector: 'my-app',
-    template: `<h1>turtle-FORTH</h1><pre>{{forth.ds}}</pre>`
+    template: `
+    <h1>turtle-FORTH</h1><pre>{{forth.ds}}</pre>
+    <form (ngSubmit)="enterKey()">
+      <input [(ngModel)]="code" placeholder="Forth code goes here... or check out help" type="text" style="width:698px;"/>
+      <input class="btn-primary" type="submit" value="go">
+    </form>
+    `
 })
 export class AppComponent {
   forth = new Forth();
+  code: string;
+
+  enterKey(event) {
+    this.forth.parse(this.code);
+    this.forth.go();
+  }
 
 }
