@@ -85,8 +85,8 @@ class Forth {
         this.ds.push(a/b);
       break;
       case "%":
-        a = this.ds.pop();
-        b = this.ds.pop();
+        a = +this.ds.pop();
+        b = +this.ds.pop();
         this.ds.push(a%b);
       break;
       case "pen":
@@ -103,6 +103,9 @@ class Forth {
       case "tn":
         a = this.ds.pop();
         yurt.rt(a);
+      break;
+      case "hm":
+        yurt.home();
       break;
       case "dup":
         this.ds.push(this.ds[this.ds.length-1]);
@@ -141,9 +144,9 @@ class Forth {
   }
   // testing
 
-  ds_ele = document.getElementById('ds');
+  //ds_ele = document.getElementById('ds');
   heap_ele = document.getElementById('heap');
-  input_ele = document.getElementById('tf-code-input');
+  //input_ele = document.getElementById('tf-code-input');
   //parse('[3, -6, "+", ".s"]');
   //parse('3 -6 + .s');
   //parse('16 Math.sqrt .s');

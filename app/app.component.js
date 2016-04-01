@@ -26,9 +26,7 @@ System.register(['angular2/core'], function(exports_1, context_1) {
                     this.funcDef = false;
                     this.funcName = '';
                     this.tokens = [];
-                    this.ds_ele = document.getElementById('ds');
                     this.heap_ele = document.getElementById('heap');
-                    this.input_ele = document.getElementById('tf-code-input');
                 }
                 Forth.prototype.parse = function (text) {
                     this.tokens = text.split(' ');
@@ -108,8 +106,8 @@ System.register(['angular2/core'], function(exports_1, context_1) {
                             this.ds.push(a / b);
                             break;
                         case "%":
-                            a = this.ds.pop();
-                            b = this.ds.pop();
+                            a = +this.ds.pop();
+                            b = +this.ds.pop();
                             this.ds.push(a % b);
                             break;
                         case "pen":
@@ -131,6 +129,9 @@ System.register(['angular2/core'], function(exports_1, context_1) {
                         case "tn":
                             a = this.ds.pop();
                             yurt.rt(a);
+                            break;
+                        case "hm":
+                            yurt.home();
                             break;
                         case "dup":
                             this.ds.push(this.ds[this.ds.length - 1]);
