@@ -110,6 +110,9 @@ class Forth {
       case "dup":
         this.ds.push(this.ds[this.ds.length-1]);
       break;
+      case "drop":
+        this.ds.pop();
+      break;
       case "swap":
         a = this.ds.pop();
         b = this.ds.pop();
@@ -117,11 +120,20 @@ class Forth {
         this.ds.push(b);
       break;
       case ".s":
-        this.ds_ele.innerHTML += JSON.stringify(this.ds);
+        //this.ds_ele.innerHTML += JSON.stringify(this.ds);
       break;
       case ".":
-        this.ds_ele.innerHTML += JSON.stringify(this.ds);
+        //this.ds_ele.innerHTML += JSON.stringify(this.ds);
         this.ds = [];
+      break;
+      case "?":
+        a = this.ds.pop();
+        if (!a) {
+          // drop the next instuction on the token
+          if (this.tokens.length > 0 ) {
+            this.tokens.pop(); //discard this instruction
+          }
+        }
       break;
       default:
         if (instruction[0] === '@') {
@@ -165,7 +177,10 @@ class Forth {
 @Component({
     selector: 'my-app',
     template: `
-    <h1>turtle-FORTH</h1><pre>{{forth.ds}}</pre>
+    <h1>turtle-FORTH</h1>
+    <div class="data-stack">
+    <div *ngFor="#item of forth.ds">{{item}}</div>
+    </div>
     <form (ngSubmit)="enterKey()">
       <input [(ngModel)]="code" placeholder="Forth code goes here... or check out help" type="text" style="width:698px;"/>
       <input class="btn-primary" type="submit" value="go">
@@ -180,5 +195,4 @@ export class AppComponent {
     this.forth.parse(this.code);
     this.forth.go();
   }
-
 }

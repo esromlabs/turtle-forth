@@ -136,6 +136,9 @@ System.register(['angular2/core'], function(exports_1, context_1) {
                         case "dup":
                             this.ds.push(this.ds[this.ds.length - 1]);
                             break;
+                        case "drop":
+                            this.ds.pop();
+                            break;
                         case "swap":
                             a = this.ds.pop();
                             b = this.ds.pop();
@@ -143,11 +146,17 @@ System.register(['angular2/core'], function(exports_1, context_1) {
                             this.ds.push(b);
                             break;
                         case ".s":
-                            this.ds_ele.innerHTML += JSON.stringify(this.ds);
                             break;
                         case ".":
-                            this.ds_ele.innerHTML += JSON.stringify(this.ds);
                             this.ds = [];
+                            break;
+                        case "?":
+                            a = this.ds.pop();
+                            if (!a) {
+                                if (this.tokens.length > 0) {
+                                    this.tokens.pop();
+                                }
+                            }
                             break;
                         default:
                             if (instruction[0] === '@') {
@@ -180,7 +189,7 @@ System.register(['angular2/core'], function(exports_1, context_1) {
                 AppComponent = __decorate([
                     core_1.Component({
                         selector: 'my-app',
-                        template: "\n    <h1>turtle-FORTH</h1><pre>{{forth.ds}}</pre>\n    <form (ngSubmit)=\"enterKey()\">\n      <input [(ngModel)]=\"code\" placeholder=\"Forth code goes here... or check out help\" type=\"text\" style=\"width:698px;\"/>\n      <input class=\"btn-primary\" type=\"submit\" value=\"go\">\n    </form>\n    "
+                        template: "\n    <h1>turtle-FORTH</h1>\n    <div class=\"data-stack\">\n    <div *ngFor=\"#item of forth.ds\">{{item}}</div>\n    </div>\n    <form (ngSubmit)=\"enterKey()\">\n      <input [(ngModel)]=\"code\" placeholder=\"Forth code goes here... or check out help\" type=\"text\" style=\"width:698px;\"/>\n      <input class=\"btn-primary\" type=\"submit\" value=\"go\">\n    </form>\n    "
                     }), 
                     __metadata('design:paramtypes', [])
                 ], AppComponent);
