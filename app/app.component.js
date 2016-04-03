@@ -76,7 +76,7 @@ System.register(['angular2/core'], function(exports_1, context_1) {
                     return dataPattern.test('' + str);
                 };
                 Forth.prototype.isNumeric = function (str) {
-                    var dataPattern = new RegExp('^-?([0-9]|\\.)+$');
+                    var dataPattern = new RegExp('^[-+]?[0-9]+\.?[0-9]*$');
                     return dataPattern.test('' + str);
                 };
                 Forth.prototype.execute = function (instruction) {

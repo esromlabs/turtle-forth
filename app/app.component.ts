@@ -55,7 +55,7 @@ class Forth {
   }
   isNumeric(str) {
     // simple integer
-    var dataPattern = new RegExp('^-?([0-9]|\\.)+$');
+    var dataPattern = new RegExp('^[-+]?[0-9]+\.?[0-9]*$');
     return dataPattern.test(''+str);
   }
   execute(instruction) {
