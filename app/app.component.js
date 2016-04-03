@@ -1,6 +1,5 @@
-System.register(['angular2/core'], function(exports_1, context_1) {
+System.register(['angular2/core'], function(exports_1) {
     "use strict";
-    var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -177,7 +176,7 @@ System.register(['angular2/core'], function(exports_1, context_1) {
                 Forth.prototype.displayHeap = function () {
                 };
                 return Forth;
-            }());
+            })();
             AppComponent = (function () {
                 function AppComponent() {
                     this.forth = new Forth();
@@ -189,12 +188,12 @@ System.register(['angular2/core'], function(exports_1, context_1) {
                 AppComponent = __decorate([
                     core_1.Component({
                         selector: 'my-app',
-                        template: "\n    <h1>turtle-FORTH</h1>\n    <div class=\"data-stack\">\n    <div *ngFor=\"#item of forth.ds\">{{item}}</div>\n    </div>\n    <form (ngSubmit)=\"enterKey()\">\n      <input [(ngModel)]=\"code\" placeholder=\"Forth code goes here... or check out help\" type=\"text\" style=\"width:698px;\"/>\n      <input class=\"btn-primary\" type=\"submit\" value=\"go\">\n    </form>\n    "
+                        template: "\n    <h1>turtle-FORTH</h1>\n    <div class=\"data-stack-container\">\n    <div *ngFor=\"#item of forth.ds\" class=\"data-stack-item\">{{item}}</div>\n    </div>\n    <form (ngSubmit)=\"enterKey()\">\n      <input [(ngModel)]=\"code\" placeholder=\"Forth code goes here... or check out help\" type=\"text\" style=\"width:698px;\"/>\n      <input class=\"btn-primary\" type=\"submit\" value=\"go\">\n    </form>\n    "
                     }), 
                     __metadata('design:paramtypes', [])
                 ], AppComponent);
                 return AppComponent;
-            }());
+            })();
             exports_1("AppComponent", AppComponent);
         }
     }

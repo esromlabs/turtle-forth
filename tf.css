@@ -1,0 +1,14 @@
+.data-stack-container
+{
+    width:700px;
+    height: 50px;
+    border:1px solid #eee;
+    display: flex;
+    flex-flow: row wrap;
+}
+.data-stack-item
+{
+    height: 22px;
+    border:1px solid #eee;
+    background-color: #ccc;
+}

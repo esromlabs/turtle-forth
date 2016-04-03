@@ -178,8 +178,8 @@ class Forth {
     selector: 'my-app',
     template: `
     <h1>turtle-FORTH</h1>
-    <div class="data-stack">
-    <div *ngFor="#item of forth.ds">{{item}}</div>
+    <div class="data-stack-container">
+    <div *ngFor="#item of forth.ds" class="data-stack-item">{{item}}</div>
     </div>
     <form (ngSubmit)="enterKey()">
       <input [(ngModel)]="code" placeholder="Forth code goes here... or check out help" type="text" style="width:698px;"/>
