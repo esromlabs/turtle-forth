@@ -12,3 +12,18 @@
     border:1px solid #eee;
     background-color: #ccc;
 }
+
+.logbook-container
+{
+    width: 500px;
+    height: 300px;
+    border: 1px solid #eee;
+    display: flex;
+    flex-flow: column wrap;
+}
+.logbook-item
+{
+    /* height: 22px; */
+    border:1px solid #eee;
+    background-color: #ccc;
+}

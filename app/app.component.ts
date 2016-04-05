@@ -1,12 +1,34 @@
 import {Component} from 'angular2/core';
+import {isFunction} from 'angular2/src/facade/lang';
 
 class Forth {
+  f = this;
   ds = [];
   ps = [];
-  heap = {};
+  heap = {
+    "pen": function() {
+      var a = this.ds.pop();
+      if (a) {yurt.pd();} else {yurt.pu();}
+    },
+    "cs": function() {
+      yurt.cs();
+    },
+    "fd": function() {
+      var a = this.ds.pop();
+      yurt.fd(a);
+    },
+    "tn": function() {
+      var a = this.ds.pop();
+      yurt.rt(a);
+    },
+    "hm": function() {
+      yurt.home();
+    }
+  };
   funcDef = false;
   funcName = '';
   tokens = [];
+
   parse(text) {
     this.tokens = text.split(' ');
   }
@@ -89,24 +111,6 @@ class Forth {
         b = +this.ds.pop();
         this.ds.push(a%b);
       break;
-      case "pen":
-        a = this.ds.pop();
-        if (a) {yurt.pd();} else {yurt.pu();}
-      break;
-      case "cs":
-        yurt.cs();
-      break;
-      case "fd":
-        a = this.ds.pop();
-        yurt.fd(a);
-      break;
-      case "tn":
-        a = this.ds.pop();
-        yurt.rt(a);
-      break;
-      case "hm":
-        yurt.home();
-      break;
       case "dup":
         this.ds.push(this.ds[this.ds.length-1]);
       break;
@@ -135,6 +139,15 @@ class Forth {
           }
         }
       break;
+      case "!?":
+        a = this.ds.pop();
+        if (a) {
+          // drop the next instuction on the token
+          if (this.tokens.length > 0 ) {
+            this.tokens.pop(); //discard this instruction
+          }
+        }
+      break;
       default:
         if (instruction[0] === '@') {
           a = this.ds.pop();
@@ -142,7 +155,13 @@ class Forth {
           this.heap_ele.innerHTML = JSON.stringify(this.heap, null, '');
         }
         else if (this.heap[instruction]) {
-          this.tokens = this.heap[instruction].concat(this.tokens);
+          if (isFunction(this.heap[instruction])) {
+            //a = this.ds.splice(-this.heap[instruction].arg_c);
+            this.heap[instruction].apply(this);
+          }
+          else {
+            this.tokens = this.heap[instruction].concat(this.tokens);
+          }
         }
         else {
           a = this.ds.pop();
@@ -169,30 +188,63 @@ class Forth {
   //parse(': times2 2 * ; 4 times2 .s');
   // a 3 + @a a fd 0.61803 360 * tn
   //go();
-
-
 }
-
 
 @Component({
     selector: 'my-app',
     template: `
     <h1>turtle-FORTH</h1>
     <div class="data-stack-container">
-    <div *ngFor="#item of forth.ds" class="data-stack-item">{{item}}</div>
+      <div *ngFor="#item of displayHash()" class="data-stack-item">{{item}}</div>
+    </div>
+    <div class="logbook-container">
+      <div *ngFor="#item of logBook" class="logbook-item">{{item}}</div>
     </div>
     <form (ngSubmit)="enterKey()">
-      <input [(ngModel)]="code" placeholder="Forth code goes here... or check out help" type="text" style="width:698px;"/>
-      <input class="btn-primary" type="submit" value="go">
+      <input [(ngModel)]="code" (keydown)="arrow($event)" placeholder="Forth code goes here... or check out help" type="text" style="width:698px;"/>
+      <input class="btn-primary" type="submit" value="enter">
     </form>
-    `
+    <div class="data-stack-container">
+    <div *ngFor="#item of forth.ds" class="data-stack-item">{{item}}</div>
+    </div>`
 })
+
 export class AppComponent {
   forth = new Forth();
   code: string;
+  logBook = [];
+  logPointer: number = 0;
 
   enterKey(event) {
     this.forth.parse(this.code);
     this.forth.go();
+    if (this.logBook[this.logBook.length -1 ] !== this.code) {
+      this.logBook.push(this.code);
+    }
+    this.logPointer = this.logBook.length;
+    this.code = '';
+  }
+  displayHash() {
+    let top_level = [];
+    for(var key in this.forth.heap) {
+      top_level.push(key + ":" + this.forth.heap[key]);
+    }
+    return top_level; //JSON.stringify(this.forth.heap);
+  }
+  arrow($event) {
+    if ($event.keyCode == 38) {
+      // up arrow
+      if (this.logPointer > 0) {
+        this.logPointer -= 1;
+      }
+      this.code = this.logBook[this.logPointer];
+    }
+    else if ($event.keyCode == 40) {
+      // down arrow
+      if (this.logPointer < this.logBook.length) {
+        this.logPointer += 1;
+      }
+      this.code = this.logBook[this.logPointer];
+    }
   }
 }
