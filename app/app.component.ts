@@ -23,7 +23,18 @@ class Forth {
     },
     "hm": function() {
       yurt.home();
+    },
+    "dash": [0, "pen", 3, "fd", 1, "pen", 3, "fd"],
+    "repeat": function() {
+      var lim = this.ds.pop();
+      var i = 0;
+      var inst;
+      inst = this.tokens.pop(); // to be executed lim times
+      for(i = 0; i < lim; i += 1) {
+        this.tokens.unshift(inst);
+      }
     }
+
   };
   funcDef = false;
   funcName = '';
