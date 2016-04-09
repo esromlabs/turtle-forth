@@ -218,7 +218,7 @@ class Forth {
     <div class="data-stack-container">
       <div *ngFor="#item of displayHash()" class="data-stack-item">{{item}}</div>
     </div>
-    <div class="logbook-container">
+    <div class="logbook-container" ng-change="scrollBottom($event)">
       <div *ngFor="#item of logBook" class="logbook-item">{{item}}</div>
     </div>
     <form (ngSubmit)="enterKey()">
@@ -267,5 +267,9 @@ export class AppComponent {
       }
       this.code = this.logBook[this.logPointer];
     }
+  }
+  scrollBottom($event) {
+    var element = $event.element;
+    element.scrollTop = element.scrollHeight;
   }
 }

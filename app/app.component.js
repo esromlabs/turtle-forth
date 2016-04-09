@@ -252,10 +252,14 @@ System.register(['angular2/core', 'angular2/src/facade/lang'], function(exports_
                         this.code = this.logBook[this.logPointer];
                     }
                 };
+                AppComponent.prototype.scrollBottom = function ($event) {
+                    var element = $event.element;
+                    element.scrollTop = element.scrollHeight;
+                };
                 AppComponent = __decorate([
                     core_1.Component({
                         selector: 'my-app',
-                        template: "\n    <h1>turtle-FORTH</h1>\n    <div class=\"data-stack-container\">\n      <div *ngFor=\"#item of displayHash()\" class=\"data-stack-item\">{{item}}</div>\n    </div>\n    <div class=\"logbook-container\">\n      <div *ngFor=\"#item of logBook\" class=\"logbook-item\">{{item}}</div>\n    </div>\n    <form (ngSubmit)=\"enterKey()\">\n      <input [(ngModel)]=\"code\" (keydown)=\"arrow($event)\" placeholder=\"Forth code goes here... or check out help\" type=\"text\" style=\"width:698px;\"/>\n      <input class=\"btn-primary\" type=\"submit\" value=\"enter\">\n    </form>\n    <div class=\"data-stack-container\">\n    <div *ngFor=\"#item of forth.ds\" class=\"data-stack-item\">{{item}}</div>\n    </div>"
+                        template: "\n    <h1>turtle-FORTH</h1>\n    <div class=\"data-stack-container\">\n      <div *ngFor=\"#item of displayHash()\" class=\"data-stack-item\">{{item}}</div>\n    </div>\n    <div class=\"logbook-container\" ng-change=\"scrollBottom($event)\">\n      <div *ngFor=\"#item of logBook\" class=\"logbook-item\">{{item}}</div>\n    </div>\n    <form (ngSubmit)=\"enterKey()\">\n      <input [(ngModel)]=\"code\" (keydown)=\"arrow($event)\" placeholder=\"Forth code goes here... or check out help\" type=\"text\" style=\"width:698px;\"/>\n      <input class=\"btn-primary\" type=\"submit\" value=\"enter\">\n    </form>\n    <div class=\"data-stack-container\">\n    <div *ngFor=\"#item of forth.ds\" class=\"data-stack-item\">{{item}}</div>\n    </div>"
                     }), 
                     __metadata('design:paramtypes', [])
                 ], AppComponent);

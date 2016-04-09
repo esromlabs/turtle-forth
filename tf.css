@@ -4,7 +4,7 @@
     height: 50px;
     border:1px solid #eee;
     display: flex;
-    flex-flow: row wrap;
+    flex-flow: column-reverse wrap;
 }
 .data-stack-item
 {
@@ -18,8 +18,7 @@
     width: 500px;
     height: 300px;
     border: 1px solid #eee;
-    display: flex;
-    flex-flow: column wrap;
+    overflow: auto;
 }
 .logbook-item
 {
