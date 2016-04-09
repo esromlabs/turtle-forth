@@ -100,27 +100,27 @@ class Forth {
       case "+":
         a = this.ds.pop();
         b = this.ds.pop();
-        this.ds.push(a+b);
+        this.ds.push(b+a);
       break;
       case "-":
         a = this.ds.pop();
         b = this.ds.pop();
-        this.ds.push(a-b);
+        this.ds.push(b-a);
       break;
       case "*":
         a = this.ds.pop();
         b = this.ds.pop();
-        this.ds.push(a*b);
+        this.ds.push(b*a);
       break;
       case "/":
         a = this.ds.pop();
         b = this.ds.pop();
-        this.ds.push(a/b);
+        this.ds.push(b/a);
       break;
       case "%":
         a = +this.ds.pop();
         b = +this.ds.pop();
-        this.ds.push(a%b);
+        this.ds.push(b%a);
       break;
       case "dup":
         this.ds.push(this.ds[this.ds.length-1]);
