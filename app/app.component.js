@@ -148,6 +148,16 @@ System.register(['angular2/core', 'angular2/src/facade/lang'], function(exports_
                             b = +this.ds.pop();
                             this.ds.push(b % a);
                             break;
+                        case "&&":
+                            a = +this.ds.pop();
+                            b = +this.ds.pop();
+                            this.ds.push(b && a);
+                            break;
+                        case "||":
+                            a = +this.ds.pop();
+                            b = +this.ds.pop();
+                            this.ds.push(b || a);
+                            break;
                         case "dup":
                             this.ds.push(this.ds[this.ds.length - 1]);
                             break;
