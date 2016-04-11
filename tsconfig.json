@@ -25,6 +25,7 @@
     "files": [
         "app/app.component.ts",
         "app/main.ts",
+        "app/tf.stack.ts",
         "turtle.ts",
         "typings/browser.d.ts",
         "typings/browser/ambient/es6-shim/index.d.ts",

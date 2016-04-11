@@ -29,6 +29,10 @@ module T3D {
       }
     }
 
+class Dashed {
+  i:number;
+  arr = [];
+}
     // Main Turtle Class
     class Turtle {
         ctx: CanvasRenderingContext2D;
@@ -37,7 +41,7 @@ module T3D {
         text_path: string;
         h: Heading; // heading in radians
         pen_down: boolean;
-        dashed:Object;
+        dashed:Dashed;
 
         constructor(ctx: CanvasRenderingContext2D, domEle) {
             this.ctx = ctx;

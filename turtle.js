@@ -27,6 +27,12 @@ var T3D;
         }
         return Vector3;
     }());
+    var Dashed = (function () {
+        function Dashed() {
+            this.arr = [];
+        }
+        return Dashed;
+    }());
     var Turtle = (function () {
         function Turtle(ctx, domEle) {
             this.ctx = ctx;

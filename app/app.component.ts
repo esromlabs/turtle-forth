@@ -1,9 +1,11 @@
 import {Component} from 'angular2/core';
 import {isFunction} from 'angular2/src/facade/lang';
+import {TFStackView, TFStackItem} from './tf.stack';
+
 
 class Forth {
-  f = this;
-  ds = [];
+  ds: number[] = [];
+  //ds = [];
   ps = [];
   heap = {
     "pen": function() {
@@ -212,7 +214,7 @@ class Forth {
 }
 
 @Component({
-    selector: 'my-app',
+    selector: 'tf-app',
     template: `
     <h1>turtle-FORTH</h1>
     <div class="data-stack-container">
@@ -225,9 +227,9 @@ class Forth {
       <input [(ngModel)]="code" (keydown)="arrow($event)" placeholder="Forth code goes here... or check out help" type="text" style="width:698px;"/>
       <input class="btn-primary" type="submit" value="enter">
     </form>
-    <div class="data-stack-container">
-    <div *ngFor="#item of forth.ds" class="data-stack-item">{{item}}</div>
-    </div>`
+    <tf-stackview  [stack]="forth.ds">
+    </tf-stackview>`,
+    directives:[TFStackView]
 })
 
 export class AppComponent {

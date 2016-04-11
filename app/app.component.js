@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/src/facade/lang'], function(exports_1, context_1) {
+System.register(['angular2/core', 'angular2/src/facade/lang', './tf.stack'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', 'angular2/src/facade/lang'], function(exports_
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, lang_1;
+    var core_1, lang_1, tf_stack_1;
     var Forth, AppComponent;
     return {
         setters:[
@@ -19,11 +19,13 @@ System.register(['angular2/core', 'angular2/src/facade/lang'], function(exports_
             },
             function (lang_1_1) {
                 lang_1 = lang_1_1;
+            },
+            function (tf_stack_1_1) {
+                tf_stack_1 = tf_stack_1_1;
             }],
         execute: function() {
             Forth = (function () {
                 function Forth() {
-                    this.f = this;
                     this.ds = [];
                     this.ps = [];
                     this.heap = {
@@ -258,8 +260,9 @@ System.register(['angular2/core', 'angular2/src/facade/lang'], function(exports_
                 };
                 AppComponent = __decorate([
                     core_1.Component({
-                        selector: 'my-app',
-                        template: "\n    <h1>turtle-FORTH</h1>\n    <div class=\"data-stack-container\">\n      <div *ngFor=\"#item of displayHash()\" class=\"data-stack-item\">{{item}}</div>\n    </div>\n    <div class=\"logbook-container\" ng-change=\"scrollBottom($event)\">\n      <div *ngFor=\"#item of logBook\" class=\"logbook-item\">{{item}}</div>\n    </div>\n    <form (ngSubmit)=\"enterKey()\">\n      <input [(ngModel)]=\"code\" (keydown)=\"arrow($event)\" placeholder=\"Forth code goes here... or check out help\" type=\"text\" style=\"width:698px;\"/>\n      <input class=\"btn-primary\" type=\"submit\" value=\"enter\">\n    </form>\n    <div class=\"data-stack-container\">\n    <div *ngFor=\"#item of forth.ds\" class=\"data-stack-item\">{{item}}</div>\n    </div>"
+                        selector: 'tf-app',
+                        template: "\n    <h1>turtle-FORTH</h1>\n    <div class=\"data-stack-container\">\n      <div *ngFor=\"#item of displayHash()\" class=\"data-stack-item\">{{item}}</div>\n    </div>\n    <div class=\"logbook-container\" ng-change=\"scrollBottom($event)\">\n      <div *ngFor=\"#item of logBook\" class=\"logbook-item\">{{item}}</div>\n    </div>\n    <form (ngSubmit)=\"enterKey()\">\n      <input [(ngModel)]=\"code\" (keydown)=\"arrow($event)\" placeholder=\"Forth code goes here... or check out help\" type=\"text\" style=\"width:698px;\"/>\n      <input class=\"btn-primary\" type=\"submit\" value=\"enter\">\n    </form>\n    <tf-stackview  [stack]=\"forth.ds\">\n    </tf-stackview>",
+                        directives: [tf_stack_1.TFStackView]
                     }), 
                     __metadata('design:paramtypes', [])
                 ], AppComponent);
