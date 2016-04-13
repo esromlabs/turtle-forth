@@ -25,6 +25,7 @@
     "files": [
         "app/app.component.ts",
         "app/main.ts",
+        "app/tf.keyed_input.ts",
         "app/tf.stack.ts",
         "turtle.ts",
         "typings/browser.d.ts",

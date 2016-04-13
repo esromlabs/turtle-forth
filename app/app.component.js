@@ -225,13 +225,12 @@ System.register(['angular2/core', 'angular2/src/facade/lang', './tf.stack'], fun
                     this.logPointer = 0;
                 }
                 AppComponent.prototype.enterKey = function (event) {
-                    this.forth.parse(this.code);
+                    this.forth.parse(event);
                     this.forth.go();
-                    if (this.logBook[this.logBook.length - 1] !== this.code) {
-                        this.logBook.push(this.code);
+                    if (this.logBook[this.logBook.length - 1] !== event) {
+                        this.logBook.push(event);
                     }
                     this.logPointer = this.logBook.length;
-                    this.code = '';
                 };
                 AppComponent.prototype.displayHash = function () {
                     var top_level = [];
@@ -241,17 +240,15 @@ System.register(['angular2/core', 'angular2/src/facade/lang', './tf.stack'], fun
                     return top_level;
                 };
                 AppComponent.prototype.arrow = function ($event) {
-                    if ($event.keyCode == 38) {
+                    if ($event.direction == 'up') {
                         if (this.logPointer > 0) {
                             this.logPointer -= 1;
                         }
-                        this.code = this.logBook[this.logPointer];
                     }
-                    else if ($event.keyCode == 40) {
+                    else if ($event.direction == 'down') {
                         if (this.logPointer < this.logBook.length) {
                             this.logPointer += 1;
                         }
-                        this.code = this.logBook[this.logPointer];
                     }
                 };
                 AppComponent.prototype.scrollBottom = function ($event) {
@@ -261,7 +258,7 @@ System.register(['angular2/core', 'angular2/src/facade/lang', './tf.stack'], fun
                 AppComponent = __decorate([
                     core_1.Component({
                         selector: 'tf-app',
-                        template: "\n    <h1>turtle-FORTH</h1>\n    <div class=\"data-stack-container\">\n      <div *ngFor=\"#item of displayHash()\" class=\"data-stack-item\">{{item}}</div>\n    </div>\n    <div class=\"logbook-container\" ng-change=\"scrollBottom($event)\">\n      <div *ngFor=\"#item of logBook\" class=\"logbook-item\">{{item}}</div>\n    </div>\n    <form (ngSubmit)=\"enterKey()\">\n      <input [(ngModel)]=\"code\" (keydown)=\"arrow($event)\" placeholder=\"Forth code goes here... or check out help\" type=\"text\" style=\"width:698px;\"/>\n      <input class=\"btn-primary\" type=\"submit\" value=\"enter\">\n    </form>\n    <tf-stackview  [stack]=\"forth.ds\">\n    </tf-stackview>",
+                        template: "\n    <h1>turtle-FORTH</h1>\n    <div class=\"data-stack-container\">\n      <div *ngFor=\"#item of displayHash()\" class=\"data-stack-item\">{{item}}</div>\n    </div>\n    <div class=\"logbook-container\" ng-change=\"scrollBottom($event)\">\n      <div *ngFor=\"#item of logBook\" class=\"logbook-item\">{{item}}</div>\n    </div>\n    <tf-keyed-input (newCode)=\"enterKey($event)\" (arrowEvent)=\"arrow($event)\"></tf-keyed-input>\n    <form (ngSubmit)=\"enterKey()\">\n      <input [(ngModel)]=\"code\" (keydown)=\"arrow($event)\" placeholder=\"Forth code goes here... or check out help\" type=\"text\" style=\"width:698px;\"/>\n      <input class=\"btn-primary\" type=\"submit\" value=\"enter\">\n    </form>\n    <tf-stackview  [stack]=\"forth.ds\">\n    </tf-stackview>",
                         directives: [tf_stack_1.TFStackView]
                     }), 
                     __metadata('design:paramtypes', [])

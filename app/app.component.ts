@@ -1,6 +1,7 @@
 import {Component} from 'angular2/core';
 import {isFunction} from 'angular2/src/facade/lang';
-import {TFStackView, TFStackItem} from './tf.stack';
+import {TFStackView} from './tf.stack';
+import {TFKeyedInput} from './tf.keyed_input';
 
 
 class Forth {
@@ -223,6 +224,7 @@ class Forth {
     <div class="logbook-container" ng-change="scrollBottom($event)">
       <div *ngFor="#item of logBook" class="logbook-item">{{item}}</div>
     </div>
+    <tf-keyed-input (newCode)="enterKey($event)" (arrowEvent)="arrow($event)"></tf-keyed-input>
     <form (ngSubmit)="enterKey()">
       <input [(ngModel)]="code" (keydown)="arrow($event)" placeholder="Forth code goes here... or check out help" type="text" style="width:698px;"/>
       <input class="btn-primary" type="submit" value="enter">
@@ -234,18 +236,17 @@ class Forth {
 
 export class AppComponent {
   forth = new Forth();
-  code: string;
+  //code: string;
   logBook = [];
   logPointer: number = 0;
 
   enterKey(event) {
-    this.forth.parse(this.code);
+    this.forth.parse(event);
     this.forth.go();
-    if (this.logBook[this.logBook.length -1 ] !== this.code) {
-      this.logBook.push(this.code);
+    if (this.logBook[this.logBook.length -1 ] !== event) {
+      this.logBook.push(event);
     }
     this.logPointer = this.logBook.length;
-    this.code = '';
   }
   displayHash() {
     let top_level = [];
@@ -255,19 +256,19 @@ export class AppComponent {
     return top_level; //JSON.stringify(this.forth.heap);
   }
   arrow($event) {
-    if ($event.keyCode == 38) {
+    if ($event.direction == 'up') {
       // up arrow
       if (this.logPointer > 0) {
         this.logPointer -= 1;
       }
-      this.code = this.logBook[this.logPointer];
+      //this.code = this.logBook[this.logPointer];
     }
-    else if ($event.keyCode == 40) {
+    else if ($event.direction == 'down') {
       // down arrow
       if (this.logPointer < this.logBook.length) {
         this.logPointer += 1;
       }
-      this.code = this.logBook[this.logPointer];
+      //this.code = this.logBook[this.logPointer];
     }
   }
   scrollBottom($event) {
