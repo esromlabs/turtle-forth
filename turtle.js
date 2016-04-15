@@ -27,6 +27,12 @@ var T3D;
         }
         return Vector3;
     }());
+    var Dashed = (function () {
+        function Dashed() {
+            this.arr = [];
+        }
+        return Dashed;
+    }());
     var Turtle = (function () {
         function Turtle(ctx, domEle) {
             this.ctx = ctx;
@@ -116,3 +122,4 @@ var T3D;
 var domCanvaseElement = document.getElementById('tf-drawing');
 var canvasContext = domCanvaseElement.getContext("2d");
 var yurt = new T3D.Turtle(canvasContext, domCanvaseElement);
+//# sourceMappingURL=turtle.js.map

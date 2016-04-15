@@ -1,7 +1,8 @@
 {
     "compilerOptions": {
+        "module": "system",
+        "sourceMap": true,
         "target": "es5",
-        "module": "commonjs",
         "moduleResolution": "node",
         "isolatedModules": false,
         "jsx": "react",
@@ -22,9 +23,21 @@
     "compileOnSave": true,
     "buildOnSave": false,
     "files": [
-        "turtle.ts"
+        "app/app.component.ts",
+        "app/main.ts",
+        "app/tf.keyed_input.ts",
+        "app/tf.stack.ts",
+        "turtle.ts",
+        "typings/browser.d.ts",
+        "typings/browser/ambient/es6-shim/index.d.ts",
+        "typings/browser/ambient/jasmine/index.d.ts"
     ],
     "atom": {
         "rewriteTsconfig": true
-    }
+    },
+    "exclude": [
+        "node_modules",
+        "typings/main",
+        "typings/main.d.ts"
+    ]
 }

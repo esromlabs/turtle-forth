@@ -4,15 +4,53 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Turtle Forth">
+  <link rel="stylesheet" href="tf.css">
+
+  <!-- 1. Load libraries -->
+  <!-- IE required polyfills, in this exact order -->
+  <script src="node_modules/es6-shim/es6-shim.min.js"></script>
+  <script src="node_modules/systemjs/dist/system-polyfills.js"></script>
+  <script src="node_modules/angular2/es6/dev/src/testing/shims_for_IE.js"></script>
+
+  <script src="node_modules/angular2/bundles/angular2-polyfills.js"></script>
+  <script src="node_modules/systemjs/dist/system.src.js"></script>
+  <script src="node_modules/rxjs/bundles/Rx.js"></script>
+  <script src="node_modules/angular2/bundles/angular2.dev.js"></script>
+
+  <!-- 2. Configure SystemJS -->
+  <script>
+    System.config({
+      packages: {
+        app: {
+          format: 'register',
+          defaultExtension: 'js'
+        }
+      }
+    });
+    System.import('app/main')
+          .then(null, console.error.bind(console));
+  </script>
   <title>Turtle Forth</title>
 
 </head>
 <body>
-<canvas id="tf-drawing" width="800" height="494" style="border: 1px solid #d3d3d3; background: #dddddd"></canvas>
+  <tf-app>Loading...</tf-app>
+<canvas id="tf-drawing" width="700" height="394" style="border: 1px solid #eeeeee; background: #dddddd"></canvas>
 <div id="ds"> </div>
 <input onkeydown = "enterKey(event)" id="tf-code-input" type="text" style="width:798px;"/>
 <pre id="heap"> </pre>
 <script src="turtle.js"></script>
-<script src="tf.js"></script>
+<script>
+  System.config({
+    packages: {
+      app: {
+        format: 'register',
+        defaultExtension: 'js'
+      }
+    }
+  });
+  System.import('app/main')
+        .then(null, console.error.bind(console));
+</script>
 </body>
 </html>

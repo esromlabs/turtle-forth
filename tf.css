@@ -1,0 +1,28 @@
+.data-stack-container
+{
+    width:700px;
+    height: 50px;
+    border:1px solid #eee;
+    display: flex;
+    flex-flow: column-reverse wrap;
+}
+.data-stack-item
+{
+    height: 22px;
+    border:1px solid #eee;
+    background-color: #ccc;
+}
+
+.logbook-container
+{
+    width: 500px;
+    height: 300px;
+    border: 1px solid #eee;
+    overflow: auto;
+}
+.logbook-item
+{
+    /* height: 22px; */
+    border:1px solid #eee;
+    background-color: #ccc;
+}
