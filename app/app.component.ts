@@ -1,6 +1,6 @@
 import {Component} from 'angular2/core';
 import {isFunction} from 'angular2/src/facade/lang';
-import {TFStackView, TFStackItem} from './tf.stack';
+import {TFStackView} from './tf.stack';
 
 
 class Forth {
@@ -24,7 +24,7 @@ class Forth {
       yurt.rt(a);
     },
     "hm": function() {
-      yurt.home();
+      yurt.home();    
     },
     "dash": [0, "pen", 3, "fd", 1, "pen", 3, "fd"],
     "repeat": function() {
